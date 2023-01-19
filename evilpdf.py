@@ -2,8 +2,18 @@
 # EvilPDF v1.1
 # coded by: @linux_choice
 # github.com/thelinuxchoice/evilpdf
+# reverse engineerd by: @Myriad74
 
-import os, time, signal, sys
+
+# First below us we have some imports for the purpose of the program
+
+# import os for os specific functions
+# import time for pauses
+# import signal to send signals
+# import sys to interact with the operating system
+import os, time, signal, sys 
+
+# import random
 from random import randint
 from PyPDF2 import PdfFileWriter, PdfFileReader
 
