@@ -13,34 +13,40 @@
 # import sys to interact with the operating system
 import os, time, signal, sys 
 
-# import random
+# import randint in order to select random integers
 from random import randint
+
+# import PyPDF2 with specific functions PdfFileWrite and PdfFileReader in order to interact with pdf's
 from PyPDF2 import PdfFileWriter, PdfFileReader
 
+
 try:
-    input = raw_input
-except NameError:
-    pass
+    input = raw_input # allow the user to enter a raw input
+except NameError: # If the variable, function or module doesn't exist
+    pass # then ignore
 
 
-def dependencies():
+def dependencies(): # This is additional code that wants to be involved 
+ # This involves installing all the necessary modules if they aren't installed
 
- os.system('command -v base64 > /dev/null 2>&1 || { echo >&2 "Install base64"; }')
- os.system('command -v zip > /dev/null 2>&1 || { echo >&2 "Install zip"; }')
- os.system('command -v netcat > /dev/null 2>&1 || { echo >&2 "Install netcat"; }')
- os.system('command -v php > /dev/null 2>&1 || { echo >&2 "Install php"; }')
-# os.system('command -v ssh > /dev/null 2>&1 || { echo >&2 "Install ssh"; }')
- os.system('command -v i686-w64-mingw32-gcc > /dev/null 2>&1 || { echo >&2 "Install mingw-w64"; }')
+ os.system('command -v base64 > /dev/null 2>&1 || { echo >&2 "Install base64"; }') # to encode/decode in base64
+ os.system('command -v zip > /dev/null 2>&1 || { echo >&2 "Install zip"; }') # interact with zip files
+ os.system('command -v netcat > /dev/null 2>&1 || { echo >&2 "Install netcat"; }') # to spawn reverse shells
+ os.system('command -v php > /dev/null 2>&1 || { echo >&2 "Install php"; }') # interact with a web env
+# os.system('command -v ssh > /dev/null 2>&1 || { echo >&2 "Install ssh"; }') # secure shell connections
+ os.system('command -v i686-w64-mingw32-gcc > /dev/null 2>&1 || { echo >&2 "Install mingw-w64"; }') # to compile C code
 
+def shutdown(signal,frame): # To shutdown the program
 
-def shutdown(signal,frame):
+  print ("\n\033[1;77m[\033[0m\033[1;33m+\033[0m\033[1;77m] Exiting...\033[0m\n") # Print that program is exiting with ANSI colour code
+#  os.system('killall -9 php > /dev/null 2>&1') # kill php process
+#  os.system('killall -9 ssh > /dev/null 2>&1') # kill ssh process
+  os.system("rm -rf page.html index.html") # remove page and index files completely
+  sys.exit() # exit using system call
 
-  print ("\n\033[1;77m[\033[0m\033[1;33m+\033[0m\033[1;77m] Exiting...\033[0m\n")
-#  os.system('killall -9 php > /dev/null 2>&1')
-#  os.system('killall -9 ssh > /dev/null 2>&1')
-  os.system("rm -rf page.html index.html")
-  sys.exit()
-signal.signal(signal.SIGINT, shutdown)
+signal.signal(signal.SIGINT, shutdown) # Function call for custom 
+# handlers to be called and executed when signal received, signal.SIGINT represents a KeyboardInterrupt 
+# process and the frame is the shutdown function
 
 
 def create_pdf(url,pdf_name,payload_name):
